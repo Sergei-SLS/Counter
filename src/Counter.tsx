@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import {Button} from "./Button.tsx";
 import './App.css'
+import {CountDisplay} from "./CountDisplay.tsx";
 
 export const Counter = () => {
     const [count, setCount] = useState(0)
@@ -23,11 +24,7 @@ export const Counter = () => {
                 <Button onClick={reset} disabled={count === 0} name='Reset'>
                 </Button>
             </div>
-            <p style={{marginTop: '10px', fontSize: '40px'}}>
-                Current count: <span className={count === 5 ? 'max-current' : ''}>
-                  {count}
-                </span>
-            </p>
+            <CountDisplay count={count}/>
         </div>
     )
 }
