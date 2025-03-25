@@ -3,11 +3,14 @@ import {Button} from "./Button.tsx";
 import './App.css'
 import {CountDisplay} from "./CountDisplay.tsx";
 
+const valueMin = 0;
+const valueMax = 5;
+
 export const Counter = () => {
     const [count, setCount] = useState(0)
 
     const increment = () => {
-        if (count < 5) {
+        if (count < valueMax) {
             setCount(count + 1)
         }
     }
@@ -19,12 +22,12 @@ export const Counter = () => {
     return (
         <div className="counter">
             <div>
-                <Button onClick={increment} disabled={count >= 5} name='Increment'>
+                <Button onClick={increment} disabled={count >= valueMax} name='Increment'>
                 </Button>
-                <Button onClick={reset} disabled={count === 0} name='Reset'>
+                <Button onClick={reset} disabled={count === valueMin} name='Reset'>
                 </Button>
             </div>
-            <CountDisplay count={count}/>
+            <CountDisplay count={count} valueMax={valueMax} />
         </div>
     )
 }
