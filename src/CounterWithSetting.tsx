@@ -28,6 +28,7 @@ export function CounterWithSettings() {
     const [maxValue, setMaxValue] = useState<number>(initialMax);
     const [count, setCount] = useState<number>(initialStart);
     const [error, setError] = useState<string>('');
+    const [isSettingsConfirmed, setIsSettingsConfirmed] = useState(false);
 
     const isInvalid = startValue < 0 || maxValue <= startValue;
 
@@ -39,25 +40,32 @@ export function CounterWithSettings() {
             const settings: CounterSettings = { start: startValue, max: maxValue };
             localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
             setCount(startValue);
+            setIsSettingsConfirmed(true);
         }
     };
 
     const handleStartChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setStartValue(Number(e.target.value));
+        setIsSettingsConfirmed(false);
+        setCount(0)
     };
 
     const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMaxValue(Number(e.target.value));
+        setIsSettingsConfirmed(false);
+        setCount(0);
     };
 
     const increment = () => {
-        if (count < maxValue) {
+        const max = isSettingsConfirmed ? maxValue : initialMax;
+        if (count < max) {
             setCount(prev => prev + 1);
         }
     };
 
     const reset = () => {
-        setCount(startValue);
+        const start = isSettingsConfirmed ? startValue : initialStart;
+        setCount(start);
     };
 
     const inputStyle = (isError: boolean): React.CSSProperties => ({
@@ -92,10 +100,11 @@ export function CounterWithSettings() {
             </div>
             {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
             <div style={{ marginTop: '20px' }}>
-                <Button onClick={increment} disabled={count >= maxValue} name="Increment" />
-                <Button onClick={reset} disabled={count === startValue} name="Reset" />
+                <Button onClick={increment} disabled={count >= (isSettingsConfirmed ? maxValue : initialMax)} name="Increment" />
+                <Button onClick={reset} disabled={count === (isSettingsConfirmed ? startValue : initialStart)} name="Reset" />
             </div>
-            <CountDisplay count={count} valueMax={maxValue} />
+            <CountDisplay count={count}
+                          valueMax={isSettingsConfirmed ? maxValue : initialMax}/>
         </div>
     );
 }

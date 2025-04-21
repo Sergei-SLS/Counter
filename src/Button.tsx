@@ -10,7 +10,7 @@ export const Button = ({ onClick, disabled, name }: ButtonProps) => {
     return (
         <button onClick={onClick}
                 disabled={disabled}
-                style={{ marginRight: '10px', borderRadius: 0 }}
+                style={{ marginLeft: '10px', marginRight: '10px', borderRadius: 0 }}
         >
             {name}
         </button>
