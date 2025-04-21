@@ -79,7 +79,7 @@ export function CounterWithSettings() {
         <div className="counter">
             <div>
                 <label>
-                    Начальное значение:
+                    Start value:
                     <input
                         type="number"
                         value={startValue}
@@ -88,7 +88,7 @@ export function CounterWithSettings() {
                     />
                 </label>
                 <label style={{ marginLeft: '10px' }}>
-                    Максимальное значение:
+                    Max value:
                     <input
                         type="number"
                         value={maxValue}
@@ -96,7 +96,7 @@ export function CounterWithSettings() {
                         style={inputStyle(maxValue <= startValue)}
                     />
                 </label>
-                <Button name="Установить" onClick={handleSetValues} />
+                <Button name="Set value" onClick={handleSetValues} disabled={startValue < 0}/>
             </div>
             {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
             <div style={{ marginTop: '20px' }}>
